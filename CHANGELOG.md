@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.0...v0.1.1) (2026-04-08)
+
+
+### Bug Fixes
+
+* add semantic release workflow to automate NPM publishing ([1ddae07](https://github.com/shaftoe/pi-freestyle-sandbox/commit/1ddae0715f370405992ff92608ed25b706004d7c))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
