@@ -353,26 +353,7 @@ describeIf("FreestyleClient integration", () => {
     itIfToken(
       "can clone a private repo using gitToken",
       async () => {
-        // We'll try cloning the user's own repos list to find a private one.
-        // If the user has no private repos, this is a best-effort test.
-        // Install wrapper so we can use gh to list repos.
-        await client.syncEnvironment(handle.vm, {
-          GITHUB_TOKEN: ghToken as string,
-        })
-
-        // List a private repo
-        const listResult = await handle.vm.exec({
-          command:
-            "gh repo list --limit 5 --json nameWithOwner,isPrivate --jq '.[] | select(.isPrivate) | .nameWithOwner' | head -1",
-          timeoutMs: 30_000,
-        })
-
-        const privateRepo = listResult.stdout?.trim()
-        if (!privateRepo) {
-          // No private repos — can't test this, but don't fail
-          console.log("Skipping private repo clone test: no private repos found")
-          return
-        }
+        const privateRepo = "shaftoe/blog"
 
         const cloneResult = await client.cloneRepo(handle.vm, {
           gitUrl: `https://github.com/${privateRepo}.git`,
@@ -416,6 +397,68 @@ describeIf("FreestyleClient integration", () => {
         })
         expect(result.stdout?.trim()).toBe(value)
       }
+    })
+  })
+
+  // ── gh CLI authentication ──────────────────────────────────────────
+
+  describe("gh CLI authentication", () => {
+    const ghToken = process.env.GITHUB_TOKEN
+    const itIfToken = ghToken && enable ? it : it.skip
+
+    describe("with GITHUB_TOKEN", () => {
+      let handle: Awaited<ReturnType<typeof client.createVM>>
+
+      beforeAll(async () => {
+        handle = await client.createVM(snapshotId)
+        // Sync env + authenticate gh in one shot
+        await client.syncEnvironment(handle.vm, { GITHUB_TOKEN: ghToken as string })
+        await client.setupGhAuth(handle.vm, ghToken as string)
+      }, 120_000)
+
+      afterAll(async () => {
+        await client.destroyVM(handle.vmId)
+      }, 30_000)
+
+      itIfToken("gh auth status shows authenticated user", async () => {
+        const result = await handle.vm.exec({
+          command: "gh auth status 2>&1",
+          timeoutMs: 15_000,
+        })
+        expect(result.stdout ?? result.stderr ?? "").toContain("Token: ")
+      })
+
+      itIfToken("gh api user returns a login", async () => {
+        const result = await handle.vm.exec({
+          command: "gh api user --jq .login",
+          timeoutMs: 15_000,
+        })
+        expect(result.statusCode).toBe(0)
+        expect(result.stdout?.trim()).toBeTruthy()
+      })
+    })
+
+    describe("without GITHUB_TOKEN", () => {
+      let handle: Awaited<ReturnType<typeof client.createVM>>
+
+      beforeAll(async () => {
+        handle = await client.createVM(snapshotId)
+        // Sync env WITHOUT GITHUB_TOKEN — no gh auth should run
+        await client.syncEnvironment(handle.vm, {})
+      }, 60_000)
+
+      afterAll(async () => {
+        await client.destroyVM(handle.vmId)
+      }, 30_000)
+
+      it("gh is not authenticated", async () => {
+        const result = await handle.vm.exec({
+          command: "gh auth status 2>&1",
+          timeoutMs: 5_000,
+        })
+        // gh auth status exits non-zero when not logged in
+        expect(result.statusCode).not.toBe(0)
+      })
     })
   })
 })

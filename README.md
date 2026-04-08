@@ -12,6 +12,7 @@ A [Pi coding agent](https://pi.dev) extension for running sandboxed subagents in
 - **Full pi experience**: Use all Pi tools and features within the sandboxed environment
 - **Context inheritance**: Automatically injects project AGENTS.md into the subagent
 - **Cancellable**: Press ESC to abort a running subagent task
+- **GitHub CLI auth**: When `GITHUB_TOKEN` is available, `gh` CLI is automatically authenticated and configured as git credential helper for seamless private repo access
 
 **NOTICE**: the first time the subagent runs it will take its sweet time to create the Docker-based snapshot, it's going to be reused once is ready by each subsequent tool call so it's a one-time only annoyance.
 
@@ -27,16 +28,18 @@ Requires a valid `FREESTYLE_API_KEY` env var. You can get one for free at <https
 pi install npm:@alexanderfortin/pi-freestyle-sandbox
 ```
 
+## Environment Variables
+
+- `FREESTYLE_API_KEY` (required): API key for Freestyle — get one free at <https://dash.freestyle.sh/>. Notice that the lack of it will prevent Pi to load the extension and startup will fail
+- `GITHUB_TOKEN` (optional): GitHub token that enables authenticated `gh` CLI commands and git operations on private repos. Set via environment variable or prefix convention (`FREESTYLE_ENV_GITHUB_TOKEN`)
+- `FREESTYLE_ENV_*` (optional): Any env var with this prefix is forwarded to the VM (e.g., `FREESTYLE_ENV_NPM_TOKEN` becomes `NPM_TOKEN` inside)
+
 ## Management Commands
 
 ```
 /freestyle list      # List all active VMs
 /freestyle cleanup   # Clean up all tracked VMs
 ```
-
-## Roadmap
-
-- add support for authenticated `gh` CLI commands
 
 ## Development
 

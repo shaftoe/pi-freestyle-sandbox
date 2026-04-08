@@ -18,4 +18,8 @@ export async function setupEnvironment(
   await client.syncEnvironment(vm, env)
   // 2. Pi auth (LLM provider keys)
   await client.syncPiAuth(vm)
+  // 3. gh CLI auth (optional — only if GITHUB_TOKEN is available)
+  if (env.GITHUB_TOKEN) {
+    await client.setupGhAuth(vm, env.GITHUB_TOKEN)
+  }
 }

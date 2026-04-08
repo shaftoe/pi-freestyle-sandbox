@@ -10,7 +10,7 @@ export const toolDefinition = {
     "Uses ephemeral VMs that auto-destroy after task completion.",
     "",
     "Environment variables are forwarded automatically:",
-    "- GITHUB_TOKEN from the host enables `gh` CLI and git push/pull on private repos.",
+    "- GITHUB_TOKEN from the host enables authenticated `gh` CLI (login + git credential helper) and private repo access.",
     "- Any env var prefixed with FREESTYLE_ENV_ (e.g. FREESTYLE_ENV_NPM_TOKEN) is forwarded.",
   ].join(" "),
   promptSnippet: "Run a coding task in a sandboxed Freestyle cloud VM",

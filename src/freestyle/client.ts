@@ -10,7 +10,7 @@ import {
   parseGitStatus,
   WRAPPER_PATH,
 } from "./commands"
-import { parseJsonlOutput, raceWithAbort } from "./helpers"
+import { escapeShellArg, parseJsonlOutput, raceWithAbort } from "./helpers"
 import type {
   CloneOptions,
   DiffResult,
@@ -47,15 +47,24 @@ export class FreestyleClient {
 
   /**
    * Execute a command in the VM and throw VmExecError on non-zero exit.
-   * Every business-logic command should go through this — never call
-   * `vm.exec` directly for anything that must succeed.
+   * By default the wrapper script is prepended so env vars are available.
+   * Use `raw: true` for bootstrap commands that run before the wrapper exists.
    */
-  private async vmExec(vm: Vm, options: { command: string; timeoutMs?: number }) {
-    const result = await vm.exec(options)
+  private async vmExec(vm: Vm, options: { command: string; timeoutMs?: number; raw?: boolean }) {
+    const command = options.raw ? options.command : `${WRAPPER_PATH} ${options.command}`
+    const result = await vm.exec({ ...options, command })
     if (result.statusCode !== 0) {
       throw new VmExecError(result, options.command)
     }
     return result
+  }
+
+  /**
+   * Execute a command in the VM via the wrapper WITHOUT throwing on non-zero exit.
+   * Use for probes where failure is an expected branch (e.g. "is this a git repo?").
+   */
+  private async vmExecGraceful(vm: Vm, options: { command: string; timeoutMs?: number }) {
+    return vm.exec({ ...options, command: `${WRAPPER_PATH} ${options.command}` })
   }
 
   // ── Snapshot management ─────────────────────────────────────────────
@@ -200,7 +209,7 @@ export class FreestyleClient {
    */
   async syncEnvironment(vm: Vm, env: EnvMapping): Promise<void> {
     await vm.fs.writeTextFile(WRAPPER_PATH, buildWrapperScript(env))
-    await this.vmExec(vm, { command: `chmod +x ${WRAPPER_PATH}` })
+    await this.vmExec(vm, { command: `chmod +x ${WRAPPER_PATH}`, raw: true })
   }
 
   /**
@@ -223,7 +232,7 @@ export class FreestyleClient {
     }
 
     // Create agent dir in VM
-    await this.vmExec(vm, { command: `mkdir -p ${VM_AGENT_DIR}` })
+    await this.vmExec(vm, { command: `mkdir -p ${VM_AGENT_DIR}`, raw: true })
     await vm.fs.writeTextFile(`${VM_AGENT_DIR}/auth.json`, authContent)
 
     // models.json is optional
@@ -234,6 +243,22 @@ export class FreestyleClient {
     } catch {
       // models.json is optional — skip silently
     }
+  }
+
+  /**
+   * Authenticate the gh CLI inside the VM using the provided token.
+   * Also configures gh as git credential helper for seamless private repo access.
+   */
+  async setupGhAuth(vm: Vm, token: string): Promise<void> {
+    // gh refuses to store credentials when GITHUB_TOKEN is set, so we
+    // run a shell that unsets it before calling gh. Raw command (no wrapper).
+    await this.vmExec(vm, {
+      command: `bash -c 'unset GITHUB_TOKEN; echo ${escapeShellArg(token)} | gh auth login --with-token'`,
+      raw: true,
+    })
+
+    // Configure gh as git credential helper for seamless push/pull
+    await this.vmExec(vm, { command: "gh auth setup-git" })
   }
 
   /**
@@ -250,6 +275,7 @@ export class FreestyleClient {
       await this.vmExec(vm, {
         command: buildCloneCommand(options),
         timeoutMs: DEFAULT_CLONE_TIMEOUT,
+        raw: true,
       })
       return { ok: true }
     } catch (error) {
@@ -282,9 +308,9 @@ export class FreestyleClient {
     }
     const args = buildPiArgs(options)
 
-    // 3. Execute via the wrapper (blocking — waits for completion, supports cancellation)
+    // 3. Execute (blocking — waits for completion, supports cancellation)
     const execPromise = this.vmExec(vm, {
-      command: `cd ${options.cwd} && ${WRAPPER_PATH} ${args.join(" ")}`,
+      command: `cd ${options.cwd} && ${args.join(" ")}`,
       timeoutMs: options.timeoutMs ?? DEFAULT_EXEC_TIMEOUT,
     })
 
@@ -303,9 +329,9 @@ export class FreestyleClient {
    */
   async captureDiff(vm: Vm, cwd: string, signal?: AbortSignal): Promise<DiffResult | null> {
     // First check if we're inside a git repository. If not, return null.
-    // We use vm.exec directly (not vmExec) because we want to handle non-zero exit gracefully.
-    const checkRepoExec = vm.exec({
-      command: `cd ${cwd} && ${WRAPPER_PATH} git rev-parse --is-inside-work-tree`,
+    // Graceful exec — non-zero exit is an expected branch.
+    const checkRepoExec = this.vmExecGraceful(vm, {
+      command: `bash -c 'cd ${cwd} && git rev-parse --is-inside-work-tree'`,
       timeoutMs: DEFAULT_DIFF_TIMEOUT,
     })
 
@@ -315,8 +341,8 @@ export class FreestyleClient {
       return null
     }
 
-    const statusExec = vm.exec({
-      command: `cd ${cwd} && ${WRAPPER_PATH} git status --porcelain`,
+    const statusExec = this.vmExecGraceful(vm, {
+      command: `bash -c 'cd ${cwd} && git status --porcelain'`,
       timeoutMs: DEFAULT_DIFF_TIMEOUT,
     })
 
@@ -330,7 +356,7 @@ export class FreestyleClient {
     if (!status.stdout?.trim()) return null
 
     const diffExec = this.vmExec(vm, {
-      command: `cd ${cwd} && ${WRAPPER_PATH} git diff && ${WRAPPER_PATH} git diff --cached`,
+      command: `bash -c 'cd ${cwd} && git diff && git diff --cached'`,
       timeoutMs: DEFAULT_DIFF_TIMEOUT,
     })
 
