@@ -1,8 +1,8 @@
 import { Type } from "@sinclair/typebox"
 
 export const toolDefinition = {
-  name: "freestyle_subagent",
-  label: "Freestyle Subagent",
+  name: "freestyle_sandbox",
+  label: "Freestyle sandboxed subagent",
   description: [
     "Delegate a coding task to a sandboxed pi agent running in a Freestyle cloud VM.",
     "The VM has an isolated filesystem with no access to your local machine.",

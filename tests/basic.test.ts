@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -803,19 +803,38 @@ describe("VmExecError", () => {
 describe("FreestyleClient", () => {
   const originalApiKey = process.env.FREESTYLE_API_KEY
 
-  it("does not throw when FREESTYLE_API_KEY is set", () => {
-    process.env.FREESTYLE_API_KEY = "test-api-key"
-    expect(() => new FreestyleClient()).not.toThrow()
+  beforeEach(() => {
+    process.env.FREESTYLE_API_KEY = "fs_test_fake_key_for_unit_tests"
+  })
+
+  afterEach(() => {
     if (originalApiKey) {
       process.env.FREESTYLE_API_KEY = originalApiKey
+    } else {
+      delete process.env.FREESTYLE_API_KEY
     }
+  })
+
+  it("throws when FREESTYLE_API_KEY is not set", () => {
+    delete process.env.FREESTYLE_API_KEY
+    expect(() => new FreestyleClient()).toThrow(
+      "API key is required. Please set the FREESTYLE_API_KEY environment variable or construct a Freestyle client with the `apiKey` option.",
+    )
+  })
+
+  it("throws when FREESTYLE_API_KEY is empty string", () => {
+    process.env.FREESTYLE_API_KEY = ""
+    expect(() => new FreestyleClient()).toThrow(
+      "API key is required. Please set the FREESTYLE_API_KEY environment variable or construct a Freestyle client with the `apiKey` option.",
+    )
+  })
+
+  it("does not throw when FREESTYLE_API_KEY is set", () => {
+    expect(() => new FreestyleClient()).not.toThrow()
   })
 
   it("does not throw when FREESTYLE_API_KEY is set to a valid value", () => {
     process.env.FREESTYLE_API_KEY = "fs_live_xxxxxxxxxxxxxxx"
     expect(() => new FreestyleClient()).not.toThrow()
-    if (originalApiKey) {
-      process.env.FREESTYLE_API_KEY = originalApiKey
-    }
   })
 })

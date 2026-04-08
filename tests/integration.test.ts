@@ -20,6 +20,9 @@ const describeIf = apiKey && enable ? describe : describe.skip
 const TINY_REPO = "https://github.com/octocat/Hello-World.git"
 
 describeIf("FreestyleClient integration", () => {
+  // Guard to prevent client creation when tests are skipped
+  if (!apiKey || !enable) return
+
   const client = new FreestyleClient({ apiKey })
   let snapshotId: string
 
@@ -345,7 +348,7 @@ describeIf("FreestyleClient integration", () => {
       expect(result.ok).toBe(true)
     }, 60_000)
 
-    const itIfToken = ghToken ? it : it.skip
+    const itIfToken = ghToken && enable ? it : it.skip
 
     itIfToken(
       "can clone a private repo using gitToken",
