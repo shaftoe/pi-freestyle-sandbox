@@ -1,3 +1,10 @@
+## [0.2.2](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.2.1...v0.2.2) (2026-04-08)
+
+
+### Bug Fixes
+
+* print warning instead of failing when env var not present ([c470745](https://github.com/shaftoe/pi-freestyle-sandbox/commit/c470745f00136b0545ba833e4bc8f2f6d707737e))
+
 ## [0.2.1](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.2.0...v0.2.1) (2026-04-08)
 
 
