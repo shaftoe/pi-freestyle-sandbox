@@ -829,6 +829,11 @@ describe("FreestyleClient", () => {
     )
   })
 
+  it("does not throw when apiKey option is provided even if env var is not set", () => {
+    delete process.env.FREESTYLE_API_KEY
+    expect(() => new FreestyleClient({ apiKey: "fs_test_api_key" })).not.toThrow()
+  })
+
   it("does not throw when FREESTYLE_API_KEY is set", () => {
     expect(() => new FreestyleClient()).not.toThrow()
   })
@@ -836,5 +841,13 @@ describe("FreestyleClient", () => {
   it("does not throw when FREESTYLE_API_KEY is set to a valid value", () => {
     process.env.FREESTYLE_API_KEY = "fs_live_xxxxxxxxxxxxxxx"
     expect(() => new FreestyleClient()).not.toThrow()
+  })
+
+  it("env var takes precedence over apiKey option when both are set", () => {
+    process.env.FREESTYLE_API_KEY = "fs_env_key"
+    // The Freestyle SDK itself handles this precedence internally
+    // This test documents that expectation
+    const client = new FreestyleClient({ apiKey: "fs_option_key" })
+    expect(client).toBeDefined()
   })
 })

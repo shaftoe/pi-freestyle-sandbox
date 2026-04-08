@@ -30,7 +30,7 @@ pi install npm:@alexanderfortin/pi-freestyle-sandbox
 
 ## Environment Variables
 
-- `FREESTYLE_API_KEY` (required): API key for Freestyle — get one free at <https://dash.freestyle.sh/>. Notice that the lack of it will prevent Pi to load the extension and startup will fail
+- `FREESTYLE_API_KEY` (required): API key for Freestyle — get one free at <https://dash.freestyle.sh/>. Notice that the lack of it will prevent Pi to load the extension correctly
 - `GITHUB_TOKEN` (optional): GitHub token that enables authenticated `gh` CLI commands and git operations on private repos. Set via environment variable or prefix convention (`FREESTYLE_ENV_GITHUB_TOKEN`)
 - `FREESTYLE_ENV_*` (optional): Any env var with this prefix is forwarded to the VM (e.g., `FREESTYLE_ENV_NPM_TOKEN` becomes `NPM_TOKEN` inside)
 
