@@ -310,7 +310,7 @@ export class FreestyleClient {
 
     // 3. Execute (blocking — waits for completion, supports cancellation)
     const execPromise = this.vmExec(vm, {
-      command: `cd ${options.cwd} && ${args.join(" ")}`,
+      command: `bash -c 'cd ${options.cwd} && ${args.join(" ")}'`,
       timeoutMs: options.timeoutMs ?? DEFAULT_EXEC_TIMEOUT,
     })
 
