@@ -7,7 +7,7 @@ interface Theme {
 }
 
 export function renderCall(args: Record<string, unknown>, theme: Theme): Text {
-  let text = theme.fg("toolTitle", theme.bold("freestyle_sandbox"))
+  let text = theme.fg("toolTitle", theme.bold("freestyle_sandbox "))
   if (args.gitUrl) {
     const short = String(args.gitUrl).replace(/.*github.com\//, "")
     text += theme.fg("accent", short)
