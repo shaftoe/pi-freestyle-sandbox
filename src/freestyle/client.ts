@@ -67,6 +67,14 @@ export class FreestyleClient {
     return vm.exec({ ...options, command: `${WRAPPER_PATH} ${options.command}` })
   }
 
+  /**
+   * Wrap a command string in bash -c for compound commands with shell builtins.
+   * Used when commands contain shell operators (&&, ||, ;, |) or builtins (cd).
+   */
+  private wrapInBash(command: string): string {
+    return `bash -c '${command}'`
+  }
+
   // ── Snapshot management ─────────────────────────────────────────────
 
   /**
@@ -310,7 +318,7 @@ export class FreestyleClient {
 
     // 3. Execute (blocking — waits for completion, supports cancellation)
     const execPromise = this.vmExec(vm, {
-      command: `bash -c 'cd ${options.cwd} && ${args.join(" ")}'`,
+      command: this.wrapInBash(`cd ${options.cwd} && ${args.join(" ")}`),
       timeoutMs: options.timeoutMs ?? DEFAULT_EXEC_TIMEOUT,
     })
 
@@ -331,7 +339,7 @@ export class FreestyleClient {
     // First check if we're inside a git repository. If not, return null.
     // Graceful exec — non-zero exit is an expected branch.
     const checkRepoExec = this.vmExecGraceful(vm, {
-      command: `bash -c 'cd ${cwd} && git rev-parse --is-inside-work-tree'`,
+      command: this.wrapInBash(`cd ${cwd} && git rev-parse --is-inside-work-tree`),
       timeoutMs: DEFAULT_DIFF_TIMEOUT,
     })
 
@@ -342,7 +350,7 @@ export class FreestyleClient {
     }
 
     const statusExec = this.vmExecGraceful(vm, {
-      command: `bash -c 'cd ${cwd} && git status --porcelain'`,
+      command: this.wrapInBash(`cd ${cwd} && git status --porcelain`),
       timeoutMs: DEFAULT_DIFF_TIMEOUT,
     })
 
@@ -356,7 +364,7 @@ export class FreestyleClient {
     if (!status.stdout?.trim()) return null
 
     const diffExec = this.vmExec(vm, {
-      command: `bash -c 'cd ${cwd} && git diff && git diff --cached'`,
+      command: this.wrapInBash(`cd ${cwd} && git diff && git diff --cached`),
       timeoutMs: DEFAULT_DIFF_TIMEOUT,
     })
 
