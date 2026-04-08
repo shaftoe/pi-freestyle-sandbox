@@ -14,8 +14,8 @@
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "build": "bun run typecheck && bun run build:tsc",
-    "build:tsc": "tsc",
-    "typecheck": "tsc --noEmit --project tsconfig.test.json",
+    "build:tsc": "tsc --project tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
     "lint": "biome check src/ tests/",
     "lint:fix": "biome check --write src/ tests/",
     "format": "biome format src/ tests/",

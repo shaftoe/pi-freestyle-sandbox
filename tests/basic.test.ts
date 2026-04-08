@@ -33,7 +33,7 @@ describe("raceWithAbort", () => {
     const controller = new AbortController()
     controller.abort()
     const promise = Promise.resolve("should not matter")
-    await expect(raceWithAbort(promise, controller.signal)).rejects.toThrow("Aborted")
+    expect(raceWithAbort(promise, controller.signal)).rejects.toThrow("Aborted")
   })
 
   it("rejects when signal aborts during execution", async () => {
@@ -46,7 +46,7 @@ describe("raceWithAbort", () => {
     const racePromise = raceWithAbort(promise, controller.signal)
     controller.abort()
 
-    await expect(racePromise).rejects.toThrow("Aborted")
+    expect(racePromise).rejects.toThrow("Aborted")
   })
 
   it("throws DOMException with name AbortError when signal is already aborted", async () => {
@@ -156,17 +156,17 @@ describe("getFinalOutput", () => {
 describe("withTimeout", () => {
   it("resolves when promise resolves in time", async () => {
     const promise = Promise.resolve("success")
-    await expect(withTimeout(promise, 1000, "test")).resolves.toBeUndefined()
+    expect(withTimeout(promise, 1000, "test")).resolves.toBeUndefined()
   })
 
   it("resolves even when promise rejects", async () => {
     const promise = Promise.reject(new Error("fail"))
-    await expect(withTimeout(promise, 1000, "test")).resolves.toBeUndefined()
+    expect(withTimeout(promise, 1000, "test")).resolves.toBeUndefined()
   })
 
   it("resolves when promise takes longer than timeout", async () => {
     const promise = new Promise((resolve) => setTimeout(() => resolve("late"), 100))
-    await expect(withTimeout(promise, 10, "test")).resolves.toBeUndefined()
+    expect(withTimeout(promise, 10, "test")).resolves.toBeUndefined()
   })
 
   it("returns quickly even if the wrapped promise never resolves", async () => {
