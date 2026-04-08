@@ -13,6 +13,8 @@ A [Pi coding agent](https://pi.dev) extension for running sandboxed subagents in
 - **Context inheritance**: Automatically injects project AGENTS.md into the subagent
 - **Cancellable**: Press ESC to abort a running subagent task
 
+**NOTICE**: the first time the subagent runs it will take its sweet time to create the Docker-based snapshot, it's going to be reused once is ready by each subsequent tool call so it's a one-time only annoyance.
+
 ## Example
 
 ![screenshot](./screenshot.png)
