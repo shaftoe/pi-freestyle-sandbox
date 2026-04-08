@@ -43,7 +43,7 @@ pi install npm:@alexanderfortin/pi-freestyle-sandbox
 bun install
 
 # Run checks
-bun run check
+bun run validate
 
 # Run tests
 bun run test
@@ -55,6 +55,13 @@ bun run build
 bun run format
 ```
 
+## Releasing
+
+This project uses automated publishing to NPM via GitHub Actions. The workflow will:
+- Run all CI checks
+- Build the package
+- Publish to NPM with provenance (signed) via [trusted publishing](https://docs.npmjs.com/trusted-publishers)
+
 ## License
 
-MIT
+See [LICENSE](./LICENSE)
