@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.2.0...v0.2.1) (2026-04-08)
+
+
+### Bug Fixes
+
+* wrap runPi command in bash -c to handle shell builtins ([665cf3b](https://github.com/shaftoe/pi-freestyle-sandbox/commit/665cf3be36bf2859c886c752b4dc7561a93f21e4))
+
 # [0.2.0](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.2...v0.2.0) (2026-04-08)
 
 
