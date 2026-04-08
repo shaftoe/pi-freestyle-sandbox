@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.2...v0.2.0) (2026-04-08)
+
+
+### Features
+
+* add gh CLI authentication for private repo access ([4b1a8d2](https://github.com/shaftoe/pi-freestyle-sandbox/commit/4b1a8d2ae32f13cefb167c65f7f28d94316a4a09))
+
 ## [0.1.2](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.1...v0.1.2) (2026-04-08)
 
 
