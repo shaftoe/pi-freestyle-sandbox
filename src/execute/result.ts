@@ -1,4 +1,4 @@
-import type { DiffResult, PiRunResult } from "../freestyle/types"
+import type { DiffResult, PiRunResult } from "../types"
 import { getFinalOutput } from "../utils"
 import type { ExecuteReturn } from "./types"
 import { textContent } from "./utils"

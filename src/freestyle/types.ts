@@ -1,4 +1,6 @@
-import type { UsageStats } from "../types"
+import type { DiffResult, EnvMapping, PiRunResult } from "../types"
+
+export type { DiffResult, EnvMapping, PiRunResult }
 
 // ── Exec guard ────────────────────────────────────────────────────────
 
@@ -36,9 +38,6 @@ export interface CloneOptions {
   gitToken?: string
 }
 
-/** Environment variable mapping forwarded from host to VM. */
-export type EnvMapping = Record<string, string>
-
 export interface PiRunOptions {
   task: string
   cwd: string
@@ -51,16 +50,4 @@ export interface PiRunOptions {
   signal?: AbortSignal
   /** Execution timeout in milliseconds */
   timeoutMs?: number
-}
-
-export interface PiRunResult {
-  exitCode: number | null
-  messages: import("../types").PiMessage[]
-  stderr: string
-  usage: UsageStats
-}
-
-export interface DiffResult {
-  changedFiles: string[]
-  diff: string
 }

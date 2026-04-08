@@ -1,4 +1,4 @@
-import { collectForwardedEnv } from "../freestyle"
+import { collectForwardedEnv } from "../utils"
 import { resolveModel } from "./config"
 import { setupEnvironment } from "./environment"
 import { formatCancelledResult, formatSuccessResult } from "./result"

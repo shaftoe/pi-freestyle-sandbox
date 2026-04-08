@@ -1,6 +1,6 @@
 import type { Vm } from "freestyle-sandboxes"
 import type { FreestyleClient } from "../freestyle"
-import type { DiffResult } from "../freestyle/types"
+import type { DiffResult } from "../types"
 import { WORKSPACE } from "./constants"
 import type { OnUpdate, RunConfig } from "./types"
 import { textContent } from "./utils"

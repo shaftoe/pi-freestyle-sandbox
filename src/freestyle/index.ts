@@ -1,3 +1,5 @@
+export type { DiffResult, EnvMapping, PiRunResult } from "../types"
+export { collectForwardedEnv } from "../utils"
 export { FreestyleClient } from "./client"
 export {
   buildCloneCommand,
@@ -6,13 +8,10 @@ export {
   parseGitStatus,
   WRAPPER_PATH,
 } from "./commands"
-export { collectForwardedEnv, escapeShellArg, parseJsonlOutput, raceWithAbort } from "./helpers"
+export { escapeShellArg, parseJsonlOutput, raceWithAbort } from "./helpers"
 export type {
   CloneOptions,
-  DiffResult,
-  EnvMapping,
   PiRunOptions,
-  PiRunResult,
   VmHandle,
 } from "./types"
 export { VmExecError } from "./types"

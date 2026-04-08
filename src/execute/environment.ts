@@ -1,6 +1,6 @@
 import type { Vm } from "freestyle-sandboxes"
 import type { FreestyleClient } from "../freestyle"
-import type { EnvMapping } from "../freestyle/types"
+import type { EnvMapping } from "../types"
 import type { OnUpdate } from "./types"
 import { textContent } from "./utils"
 
