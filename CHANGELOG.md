@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.1...v0.1.2) (2026-04-08)
+
+
+### Bug Fixes
+
+* add missing space after tool tilte ([80c8236](https://github.com/shaftoe/pi-freestyle-sandbox/commit/80c823618972e0107a75ac8c20c9b65bd7f96fe7))
+
 ## [0.1.1](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.0...v0.1.1) (2026-04-08)
 
 
