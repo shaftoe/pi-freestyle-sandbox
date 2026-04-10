@@ -14,7 +14,8 @@ A [Pi coding agent](https://pi.dev) extension for running sandboxed subagents in
 - **Cancellable**: Press ESC to abort a running subagent task
 - **GitHub CLI auth**: When `GITHUB_TOKEN` is available, `gh` CLI is automatically authenticated and configured as git credential helper for seamless private repo access
 
-**NOTICE**: the first time the subagent runs it will take its sweet time to create the Docker-based snapshot, it's going to be reused once is ready by each subsequent tool call so it's a one-time only annoyance.
+> [!NOTE]
+> the first time the subagent runs it will take its sweet time to create the Docker-based snapshot, it's going to be reused once is ready by each subsequent tool call so it's a one-time only annoyance.
 
 ## Example
 
