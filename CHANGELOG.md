@@ -1,44 +1,39 @@
-## [0.2.2](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.2.1...v0.2.2) (2026-04-08)
-
-
-### Bug Fixes
-
-* print warning instead of failing when env var not present ([c470745](https://github.com/shaftoe/pi-freestyle-sandbox/commit/c470745f00136b0545ba833e4bc8f2f6d707737e))
-
-## [0.2.1](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.2.0...v0.2.1) (2026-04-08)
-
-
-### Bug Fixes
-
-* wrap runPi command in bash -c to handle shell builtins ([665cf3b](https://github.com/shaftoe/pi-freestyle-sandbox/commit/665cf3be36bf2859c886c752b4dc7561a93f21e4))
-
-# [0.2.0](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.2...v0.2.0) (2026-04-08)
-
-
-### Features
-
-* add gh CLI authentication for private repo access ([4b1a8d2](https://github.com/shaftoe/pi-freestyle-sandbox/commit/4b1a8d2ae32f13cefb167c65f7f28d94316a4a09))
-
-## [0.1.2](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.1...v0.1.2) (2026-04-08)
-
-
-### Bug Fixes
-
-* add missing space after tool tilte ([80c8236](https://github.com/shaftoe/pi-freestyle-sandbox/commit/80c823618972e0107a75ac8c20c9b65bd7f96fe7))
-
-## [0.1.1](https://github.com/shaftoe/pi-freestyle-sandbox/compare/v0.1.0...v0.1.1) (2026-04-08)
-
-
-### Bug Fixes
-
-* add semantic release workflow to automate NPM publishing ([1ddae07](https://github.com/shaftoe/pi-freestyle-sandbox/commit/1ddae0715f370405992ff92608ed25b706004d7c))
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.2.2] 2026-04-08
+
+### Fixed
+
+- print warning instead of failing when env var not present
+
+## [0.2.1] 2026-04-08
+
+### Fixed
+
+- wrap runPi command in bash -c to handle shell builtins
+
+## [0.2.0] 2026-04-08
+
+### Added
+
+- add gh CLI authentication for private repo access
+
+## [0.1.2] 2026-04-08
+
+### Fixed
+
+- add missing space after tool title
+
+## [0.1.1] 2026-04-08
+
+### Fixed
+
+- add semantic release workflow to automate NPM publishing
 
 ## [0.1.0] 2026-04-08
 
