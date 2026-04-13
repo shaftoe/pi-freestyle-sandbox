@@ -1,4 +1,4 @@
-import type { Vm } from "freestyle-sandboxes"
+import type { Vm } from "freestyle"
 import type { FreestyleClient } from "../freestyle"
 import type { EnvMapping } from "../types"
 import type { OnUpdate } from "./types"

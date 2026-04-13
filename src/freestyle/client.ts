@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs"
 import { homedir } from "node:os"
 import { join } from "node:path"
-import { Freestyle, type FreestyleOptions, type Vm } from "freestyle-sandboxes"
+import { Freestyle, type FreestyleOptions, type Vm } from "freestyle"
 import { Temporal } from "temporal-polyfill"
 import {
   buildCloneCommand,

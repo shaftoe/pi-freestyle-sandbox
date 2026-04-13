@@ -27,7 +27,7 @@ export class VmExecError extends Error {
 
 export interface VmHandle {
   vmId: string
-  vm: import("freestyle-sandboxes").Vm
+  vm: import("freestyle").Vm
 }
 
 export interface CloneOptions {

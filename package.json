@@ -28,25 +28,25 @@
     "release:dry-run": "semantic-release --dry-run"
   },
   "dependencies": {
-    "freestyle-sandboxes": "^0.1.42",
+    "freestyle": "0.1.46",
     "temporal-polyfill": "0.3.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.10",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^12.0.6",
+    "@biomejs/biome": "2.4.11",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "12.0.6",
     "@semantic-release/npm": "13.1.5",
-    "@semantic-release/release-notes-generator": "^14.1.0",
-    "@types/bun": "1.3.11",
-    "semantic-release": "^25.0.3",
+    "@semantic-release/release-notes-generator": "14.1.0",
+    "@types/bun": "1.3.12",
+    "semantic-release": "25.0.3",
     "typescript": "6.0.2"
   },
   "peerDependencies": {
     "@sinclair/typebox": "0.34.49",
-    "@mariozechner/pi-coding-agent": "*",
-    "@mariozechner/pi-tui": "*"
+    "@mariozechner/pi-coding-agent": "0.66.1",
+    "@mariozechner/pi-tui": "0.66.1"
   },
   "publishConfig": {
     "access": "public"

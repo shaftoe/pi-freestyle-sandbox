@@ -1,4 +1,4 @@
-import type { Vm } from "freestyle-sandboxes"
+import type { Vm } from "freestyle"
 import type { FreestyleClient } from "../freestyle"
 import { WORKSPACE } from "./constants"
 import type { ExecuteParams, FailureResult, OnUpdate } from "./types"
