@@ -1,6 +1,6 @@
 {
   "name": "@alexanderfortin/pi-freestyle-sandbox",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Pi extension for running sandboxed subagents in Freestyle cloud VMs",
   "type": "module",
   "main": "./dist/index.js",
