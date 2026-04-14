@@ -47,8 +47,8 @@
   },
   "peerDependencies": {
     "@sinclair/typebox": "0.34.49",
-    "@mariozechner/pi-coding-agent": "0.66.1",
-    "@mariozechner/pi-tui": "0.66.1"
+    "@mariozechner/pi-coding-agent": "0.67.1",
+    "@mariozechner/pi-tui": "0.67.1"
   },
   "publishConfig": {
     "access": "public"
