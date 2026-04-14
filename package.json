@@ -33,6 +33,7 @@
     "temporal-polyfill": "0.3.2"
   },
   "devDependencies": {
+    "@alexanderfortin/semantic-release-keep-a-changelog": "0.2.0",
     "@biomejs/biome": "2.4.11",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "13.0.1",
