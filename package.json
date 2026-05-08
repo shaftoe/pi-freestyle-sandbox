@@ -29,21 +29,21 @@
     "release:dry-run": "semantic-release --dry-run"
   },
   "dependencies": {
-    "freestyle": "0.1.46",
+    "freestyle": "0.1.49",
     "temporal-polyfill": "0.3.2"
   },
   "devDependencies": {
-    "@alexanderfortin/semantic-release-keep-a-changelog": "0.2.0",
-    "@biomejs/biome": "2.4.11",
+    "@alexanderfortin/semantic-release-keep-a-changelog": "0.2.1",
+    "@biomejs/biome": "2.4.14",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "12.0.6",
     "@semantic-release/npm": "13.1.5",
     "@semantic-release/release-notes-generator": "14.1.0",
-    "@types/bun": "1.3.12",
+    "@types/bun": "1.3.13",
     "semantic-release": "25.0.3",
-    "typescript": "6.0.2"
+    "typescript": "6.0.3"
   },
   "peerDependencies": {
     "@sinclair/typebox": "0.34.49",
