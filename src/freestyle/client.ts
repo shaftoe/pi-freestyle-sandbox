@@ -110,7 +110,7 @@ export class FreestyleClient {
             FROM node:trixie
             RUN apt-get update && \
               apt-get install -y gh git ca-certificates curl
-            RUN npm install -g @mariozechner/pi-coding-agent
+            RUN npm install -g @earendil-works/pi-coding-agent
           `,
         },
       },

@@ -1,4 +1,4 @@
-import { Text } from "@mariozechner/pi-tui"
+import { Text } from "@earendil-works/pi-tui"
 import type { FreestyleSubagentDetails } from "../types"
 
 interface Theme {

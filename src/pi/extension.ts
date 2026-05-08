@@ -8,7 +8,7 @@
  * The API key can be obtained from https://freestyle.sh
  */
 
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent"
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent"
 import { executeSubagent } from "../execute"
 import { FreestyleClient } from "../freestyle"
 import { renderCall, renderResult } from "./render"
